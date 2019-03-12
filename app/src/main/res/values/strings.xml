@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Saluja</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="desc_a">Flat 15% OFF on Licious Orders + Extra 15% Cashback + 20% Back with Amazon Pay</string>
+    <string name="desc_b">Upto 70% OFF + Extra 15% Cashback + 20% Back with Amazon Pay</string>
+    <string name="desc_c">Upto 70% OFF on Licious Orders + Extra 15% Cashback + 20% Back with Amazon Pay</string>
+    <string name="desc_d">Flat 15% OFF (25% OFF on Medicines + 30% E-Cash) + Extra 15% Cashback + 20% Back with Amazon Pay</string>
+
+    <string name="browse_shope_earn"><![CDATA[Browse,Shope & Earn]]></string>
+    <string name="paragraph_1">Grab Buddy is the online Singing Competition Platform design and developed with the vision of bringing transparancy. Recognition and Queless Crowd. The Platform brings Easy and Economical Relief to Young. Budding and Passionate Singers.</string>
+    <string name="wwho">WWHO WE AREHO WE ARE</string>
+    <string name="paragrahp_2">Grab Buddy is a unit of admiere Sylvyn Private Limited The idea of helping young artist earn recognisation and wing a cheering for base was given by Mr. Ritesh Anand. CEO and Founder of worlds first digital signging competition plateform</string>
+    <string name="Grap_buddy_vision">Grab Buddy Vision</string>
+    <string name="revolution">Revolution is the music industry in favor of Young. Building and Passionate Artist. Knowing The value fo Struggle. Dreams. Hardwork. Time and Money. we bring:</string>
+    <string name="best_industry">-Best Industry Experts</string>
+    <string name="exclusive">-Exclusive Promotion Worldwide</string>
+    <string name="record_lebel">-Record Label Projects (Official Original and Covers)</string>
+    <string name="opportunities">-Opportunities fo Playback Singing.</string>
+    <string name="brand_secognition">-Brand Recognition through Stage throughout India</string>
+
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">REWARDING</string>
+    <string name="slide_1_desc">Browse, shop and Earn \n Make Online Shopping!</string>
+
+    <string name="slide_2_title">Do not Pay Full </string>
+    <string name="slide_2_desc"> discount off a particular \n Product</string>
+
+    <string name="slide_3_title">Exclusive Coupons</string>
+    <string name="slide_3_desc">Get Notification for \n Premium Deals</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+    <string name="hide_pwd">Hide Password</string>
+    <string name="show_pwd">Show Password</string>
+    <string name="registered_emailid">Enter Registered Email Id</string>
+    <string name="email">Email id</string>
+    <string name="back">Back</string>
+    <string name="submit">Submit</string>
+    <string name="login">Login</string>
+    <string name="passowrd">Password</string>
+    <string name="forgot">Forgot Password</string>
+    <string name="newUser">Do not have an account? Sign Up</string>
+    <string name="signUp">Sign Up</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="terms_conditions">Terms And Conditions</string>
+    <string name="already_user">Have an account? Login </string>
+    <string name="coupon_description">Now get personalised mugs at reasonable price. In this store personalised mugs start from Rs 249 on wards.</string>
+    <string name="connection">Network error !!!</string>
+    <string name="saluja_card">Saluja Cart</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
