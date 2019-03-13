@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.Activity;
+package saluja.com.saluja.ui.fragment.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,8 +30,8 @@ import saluja.com.saluja.model.ProductDetail;
 import saluja.com.saluja.utilit.Alerts;
 
 import static saluja.com.saluja.Api.URLs.URL_PRODUCT_DETAIL;
-import static saluja.com.saluja.ui.fragment.Activity.MainActivity.cart_count;
-import static saluja.com.saluja.ui.fragment.Activity.MainActivity.cart_number;
+import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_count;
+import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_number;
 
 public class ProductDetailActivity extends AppCompatActivity {
     TextView tvDetail, productName, productOldPrice, productNewPrice , tvPriceDetail;

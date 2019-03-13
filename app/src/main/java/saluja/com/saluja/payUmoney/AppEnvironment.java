@@ -6,7 +6,7 @@ package saluja.com.saluja.payUmoney;
  */
 public enum AppEnvironment {
 
-    SANDBOX {
+    /*SANDBOX {
         @Override
         public String merchant_Key() {
             return "QylhKRVd";
@@ -36,11 +36,11 @@ public enum AppEnvironment {
         public boolean debug() {
             return true;
         }
-    },
+    },*/
     PRODUCTION {
         @Override
         public String merchant_Key() {
-            return "QylhKRVd";
+            return "Ra8SLavg";
         }
         @Override
         public String merchant_ID() {
@@ -58,7 +58,7 @@ public enum AppEnvironment {
 
         @Override
         public String salt() {
-            return "seVTUgzrgE";
+            return "Jhag2RuhpD";
         }
 
         @Override

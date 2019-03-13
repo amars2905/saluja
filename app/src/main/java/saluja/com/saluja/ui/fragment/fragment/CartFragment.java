@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,13 +26,10 @@ import saluja.com.saluja.constant.Constant;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
-import saluja.com.saluja.ui.fragment.Activity.CheckOutActivity;
-import saluja.com.saluja.ui.fragment.Activity.MainActivity;
-import saluja.com.saluja.utilit.ConstantData;
+import saluja.com.saluja.ui.fragment.activity.CheckOutActivity;
 import saluja.com.saluja.utilit.SessionManager;
 
-import static android.content.Context.MODE_PRIVATE;
-import static saluja.com.saluja.ui.fragment.Activity.MainActivity.cart_number;
+import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_number;
 
 
 @SuppressLint("ValidFragment")

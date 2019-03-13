@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.ActivityCompat;
 
-import saluja.com.saluja.ui.fragment.Activity.MainActivity;
+import saluja.com.saluja.ui.fragment.activity.MainActivity;
 
 
 public class SessionManager {

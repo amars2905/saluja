@@ -14,28 +14,37 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.fragment.Activity.CheckOutActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".ui.fragment.Activity.AddtoCart" />
-        <activity android:name=".ui.fragment.Activity.ProductDetailActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
         <activity
-            android:name=".ui.fragment.Activity.MainActivity"
+            android:name=".ui.fragment.activity.CheckOutActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.fragment.activity.AddtoCart" />
+        <activity
+            android:name=".ui.fragment.activity.ProductDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.fragment.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".payUmoney.PayUmoneyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".payUmoney.PayUmoneyActivity" />
     </application>
 
 </manifest>

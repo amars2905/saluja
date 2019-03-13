@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -12,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -73,10 +71,10 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
 
     private void init() {
         mAppPreference = new AppPreference();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(getString(R.string.app_name));
+        toolbar.setTitle(getString(R.string.app_name));*/
         settings = getSharedPreferences("settings", MODE_PRIVATE);
         logoutBtn = (TextView) findViewById(R.id.logout_button);
         email_et = (EditText) findViewById(R.id.email_et);
@@ -99,7 +97,6 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
         }
 
         logoutBtn.setOnClickListener(this);
-        AppCompatRadioButton radio_btn_sandbox = (AppCompatRadioButton) findViewById(R.id.radio_btn_sandbox);
         AppCompatRadioButton radio_btn_production = (AppCompatRadioButton) findViewById(R.id.radio_btn_production);
         radioGroup_select_env = (RadioGroup) findViewById(R.id.radio_grp_env);
 
@@ -114,10 +111,10 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
         if (settings.getBoolean("is_prod_env", false)) {
             ((BaseApplication) getApplication()).setAppEnvironment(AppEnvironment.PRODUCTION);
             radio_btn_production.setChecked(true);
-        } else {
+        }/* else {
             ((BaseApplication) getApplication()).setAppEnvironment(AppEnvironment.SANDBOX);
             radio_btn_sandbox.setChecked(true);
-        }
+        }*/
         setupCitrusConfigs();
     }
 
@@ -281,10 +278,10 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 switch (i) {
-                    case R.id.radio_btn_sandbox:
+                    /*case R.id.radio_btn_sandbox:
                         //selectSandBoxEnv();
                         Toast.makeText(mContext, "Only for production", Toast.LENGTH_SHORT).show();
-                        break;
+                        break;*/
                     case R.id.radio_btn_production:
                         selectProdEnv();
                         break;
@@ -297,7 +294,6 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void selectProdEnv() {
-
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -305,7 +301,6 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
                 editor = settings.edit();
                 editor.putBoolean("is_prod_env", true);
                 editor.apply();
-
                 if (PayUmoneyFlowManager.isUserLoggedIn(getApplicationContext())) {
                     logoutBtn.setVisibility(View.VISIBLE);
                 } else {

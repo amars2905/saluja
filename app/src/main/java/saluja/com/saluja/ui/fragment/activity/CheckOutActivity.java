@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.Activity;
+package saluja.com.saluja.ui.fragment.activity;
 
 import android.content.Context;
 import android.content.Intent;

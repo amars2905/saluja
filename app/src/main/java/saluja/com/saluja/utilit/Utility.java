@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
-import saluja.com.saluja.ui.fragment.Activity.CheckOutActivity;
-import saluja.com.saluja.ui.fragment.Activity.MainActivity;
+import saluja.com.saluja.ui.fragment.activity.CheckOutActivity;
+import saluja.com.saluja.ui.fragment.activity.MainActivity;
 import saluja.com.saluja.R;
 
 
