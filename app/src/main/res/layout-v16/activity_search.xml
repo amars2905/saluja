@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.SearchActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/ic_back_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/white"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ic_back_search"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="Search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/bg_layout"
+        android:drawableLeft="@drawable/ic_search"
+        android:hint="Search your product"
+        android:padding="8dp"
+        android:textSize="14sp"
+        android:drawableStart="@drawable/ic_search" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gridDetailrclv"/>
+</LinearLayout>

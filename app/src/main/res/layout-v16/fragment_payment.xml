@@ -67,7 +67,7 @@
                 android:drawablePadding="7dp"
                 android:layoutDirection="rtl"
                 android:padding="10dp"
-                android:text="PayPal"
+                android:text="PayUMoney"
                 android:textAlignment="textStart"
                 android:textSize="16sp" />
 
@@ -75,6 +75,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark" />
+
+            <RadioButton
+                android:id="@+id/rb_payment_credit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_margin="4dp"
+                android:layout_marginLeft="25dp"
+                android:checked="true"
+                android:drawablePadding="7dp"
+                android:layoutDirection="rtl"
+                android:padding="10dp"
+                android:text="cash on delivery"
+                android:textAlignment="textStart"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_d" />
         </RadioGroup>
 
         <android.support.v7.widget.RecyclerView
@@ -92,7 +112,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="0dp"

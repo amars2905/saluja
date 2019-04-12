@@ -38,7 +38,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import saluja.com.saluja.R;
+import saluja.com.saluja.constant.Constant;
+import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.utilit.BaseActivity;
+import saluja.com.saluja.utilit.SessionManager;
+import saluja.com.saluja.utilit.Utility;
 
 public class PayUmoneyActivity extends BaseActivity implements View.OnClickListener {
 
@@ -57,15 +61,18 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
     private AppCompatRadioButton radio_btn_default;
     private AppPreference mAppPreference;
     private AppCompatRadioButton radio_btn_theme_purple, radio_btn_theme_pink, radio_btn_theme_green, radio_btn_theme_grey;
-
+    public DatabaseHandler databaseCart;
+    private String DATABASE_CART = "cart.db";
     private Button payNowButton;
     private PayUmoneySdkInitializer.PaymentParam mPaymentParams;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payumoney);
-
+        databaseCart = new DatabaseHandler(this, DATABASE_CART);
+        sessionManager = new SessionManager(mContext);
         init();
     }
 
@@ -204,14 +211,13 @@ public class PayUmoneyActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setUpUserDetails() {
-        userDetailsPreference = getSharedPreferences(AppPreference.USER_DETAILS, MODE_PRIVATE);
-        userEmail = userDetailsPreference.getString(AppPreference.USER_EMAIL, mAppPreference.getDummyEmail());
 
-        userMobile = userDetailsPreference.getString(AppPreference.USER_MOBILE, "");
+        //userEmail = AppPreference.USER_EMAIL
 
-        email_et.setText(userEmail);
-        mobile_et.setText(userMobile);
-        amount_et.setText(mAppPreference.getDummyAmount());
+        String pay = Utility.getCartTotal(databaseCart);
+        email_et.setText(saluja.com.saluja.AppPreference.getStringPreference(mContext, Constant.EMAIL_ID));
+        mobile_et.setText(saluja.com.saluja.AppPreference.getStringPreference(mContext, Constant.PHONE));
+        amount_et.setText(pay);
         restoreAppPref();
     }
 

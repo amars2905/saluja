@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.activity;
+package saluja.com.saluja.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +25,11 @@ import saluja.com.saluja.R;
 import saluja.com.saluja.constant.Constant;
 import saluja.com.saluja.ui.fragment.HomeFragment;
 import saluja.com.saluja.ui.fragment.MobileFragment;
-import saluja.com.saluja.ui.fragment.fragment.CartFragment;
+import saluja.com.saluja.ui.fragment.AppleFragment;
+import saluja.com.saluja.ui.fragment.CartFragment;
+import saluja.com.saluja.ui.fragment.MiFragment;
+import saluja.com.saluja.ui.fragment.OppoFragment;
+import saluja.com.saluja.ui.fragment.SamsungFragment;
 import saluja.com.saluja.utilit.ConstantData;
 import saluja.com.saluja.utilit.Utility;
 
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout rlCart;
     public static TextView cart_number;
     public static int cart_count = 0;
+    public ImageView btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void init(){
         cart_number = findViewById(R.id.cart_number);
+        btnSearch = findViewById(R.id.btnSearch);
         cart_number.setText("" + cart_count);
         btnHome = (LinearLayout)findViewById(R.id.btnHome);
         btnMobile = (LinearLayout)findViewById(R.id.btnMobile);
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btnMi.setOnClickListener(this);
         btnLenovo.setOnClickListener(this);
         rlCart.setOnClickListener(this);
+        btnSearch.setOnClickListener(this);
     }
 
     @Override
@@ -126,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_camera) {
             //webView.loadUrl("http://salujacart.com/index.php/product-category/clothing/accessories/");
         } else if (id == R.id.nav_gallery) {
-            fragment = new CartFragment(context , this);
-            Utility.setFragment(fragment, context, ConstantData.MOBILE);
+            Intent intent = new Intent(this, CartFragment.class);
+            startActivity(intent);
         } else if (id == R.id.nav_manage) {
             //webView.loadUrl("http://salujacart.com/index.php/product-category/mobile/");
         } else if (id == R.id.nav_share) {
@@ -163,37 +171,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Utility.setFragment(fragment, context, ConstantData.MOBILE);
                 break;
             case R.id.btnSamsung :
-                fragment = new MobileFragment();
-                Utility.setFragment(fragment, context, ConstantData.MOBILE);
+                fragment = new SamsungFragment();
+                Utility.setFragment(fragment, context, ConstantData.SAMSUNG);
                 break;
             case R.id.btnVivo :
                 fragment = new MobileFragment();
                 Utility.setFragment(fragment, context, ConstantData.MOBILE);
                 break;
             case R.id.btnApple :
-                fragment = new MobileFragment();
-                Utility.setFragment(fragment, context, ConstantData.MOBILE);
+                fragment = new AppleFragment();
+                Utility.setFragment(fragment, context, ConstantData.APPLE);
                 break;
             case R.id.btnMoto :
-                fragment = new MobileFragment();
-                Utility.setFragment(fragment, context, ConstantData.MOBILE);
+                fragment = new HomeFragment();
+                Utility.setFragment(fragment, context, ConstantData.HOME);
                 break;
             case R.id.btnMi :
-                fragment = new MobileFragment();
-                Utility.setFragment(fragment, context, ConstantData.MOBILE);
+                fragment = new MiFragment();
+                Utility.setFragment(fragment, context, ConstantData.MI);
                 break;
             case R.id.btnOppo :
-                fragment = new MobileFragment();
-                Utility.setFragment(fragment, context, ConstantData.MOBILE);
+                fragment = new OppoFragment();
+                Utility.setFragment(fragment, context, ConstantData.OPPO);
                 break;
             case R.id.btnLenovo :
-                fragment = new MobileFragment();
+                fragment = new HomeFragment();
                 Utility.setFragment(fragment, context, ConstantData.MOBILE);
                 break;
 
             case R.id.rlCart :
-                fragment = new CartFragment(context, this);
-                Utility.setFragment(fragment, context, ConstantData.CART);
+                Intent intent1 = new Intent(this, CartFragment.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.btnSearch :
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+
                 break;
         }
     }

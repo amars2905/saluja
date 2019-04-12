@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.activity.ProductDetailActivity">
+    tools:context=".ui.activity.ProductDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,6 +17,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="#12E9E9E9"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="300sp"
@@ -80,6 +84,19 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:src="@drawable/ic_shopping_cart"
+        android:tint="@color/gray_c"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_50dp"
+        android:layout_marginRight="@dimen/dimen_40dp"
+        android:id="@+id/cart_btn"
+        android:visibility="gone"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

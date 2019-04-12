@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,36 +17,47 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+        <activity android:name=".ui.activity.ThankYouActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ui.activity.SignUpActivity" />
+        <activity android:name=".ui.activity.LoginActivity" />
         <activity
-            android:name=".ui.fragment.activity.CheckOutActivity"
+            android:name=".ui.activity.CheckOutActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.fragment.activity.AddtoCart" />
+        <activity android:name=".ui.activity.AddtoCart" />
         <activity
-            android:name=".ui.fragment.activity.ProductDetailActivity"
+            android:name=".ui.activity.SearchActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.fragment.activity.MainActivity"
+            android:name=".ui.activity.ProductDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".payUmoney.PayUmoneyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".payUmoney.PayUmoneyActivity">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".ui.fragment.CartFragment"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.activity;
+package saluja.com.saluja.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

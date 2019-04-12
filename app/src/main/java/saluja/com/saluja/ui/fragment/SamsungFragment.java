@@ -26,17 +26,16 @@ import saluja.com.saluja.R;
 import saluja.com.saluja.adapter.ProductAdapter;
 
 import static android.support.constraint.Constraints.TAG;
-import static saluja.com.saluja.Api.URLs.URL_PRODUCT_LIST;
 import static saluja.com.saluja.Api.URLs.URL_PRODUCT_LIST1;
 
-public class MobileFragment extends Fragment implements View.OnClickListener {
+public class SamsungFragment extends Fragment implements View.OnClickListener {
     private View view;
     RecyclerView rv_mobilelist;
     private ArrayList<ProductModel> productModelArrayList = new ArrayList<>();
     ProgressDialog pDialog;
     static int page = 0;
     Button bt_layout_loadmore;
-    public MobileFragment() {
+    public SamsungFragment() {
         // Required empty public constructor
     }
 
@@ -116,7 +115,7 @@ public class MobileFragment extends Fragment implements View.OnClickListener {
                             JSONObject objectcat = category_array.getJSONObject(1);
                             category_name = objectcat.getString("slug");
                         }
-                        if (category_name.equals("vivo")) {
+                        if (category_name.equals("samsung")) {
                             ProductModel productModel = new ProductModel();
                             productModel.setPro_id(id);
                             productModel.setPro_name(name);

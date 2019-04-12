@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
-import saluja.com.saluja.ui.fragment.activity.CheckOutActivity;
-import saluja.com.saluja.ui.fragment.activity.MainActivity;
+import saluja.com.saluja.ui.activity.CheckOutActivity;
+import saluja.com.saluja.ui.activity.MainActivity;
 import saluja.com.saluja.R;
 
 
@@ -38,7 +38,7 @@ public class Utility {
     }
 
     public static void setFragment1(Fragment fragment, Context ctx, String tag) {
-        ((CheckOutActivity) ctx).getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, fragment, tag).commit();
+        ((CheckOutActivity) ctx).getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, fragment, tag).addToBackStack("0").commit();
     }
    /* public static void setProfileFragment(Fragment fragment, Context ctx) {
         ((MainActivity) ctx).getSupportFragmentManager().beginTransaction().replace(R.id.fl_myprofile, fragment).commit();

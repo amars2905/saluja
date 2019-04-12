@@ -1,7 +1,8 @@
-package saluja.com.saluja.ui.fragment.activity;
+package saluja.com.saluja.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,23 +30,25 @@ import saluja.com.saluja.constant.Constant;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
+import saluja.com.saluja.ui.fragment.CartFragment;
 import saluja.com.saluja.utilit.Alerts;
 
 import static saluja.com.saluja.Api.URLs.URL_PRODUCT_DETAIL;
-import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_count;
-import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_number;
+import static saluja.com.saluja.ui.activity.MainActivity.cart_count;
+import static saluja.com.saluja.ui.activity.MainActivity.cart_number;
 
 public class ProductDetailActivity extends AppCompatActivity {
-    TextView tvDetail, productName, productOldPrice, productNewPrice , tvPriceDetail;
+    TextView tvDetail, productName, productOldPrice, productNewPrice, tvPriceDetail;
     ImageView productImage;
     ProgressDialog pDialog;
-    String id,name,description,date_modified,regular_price,sale_price,price,image1,price_html;
+    String id, name, description, date_modified, regular_price, sale_price, price, image1, price_html;
     Button btnAddtoCart;
     ProductDetail productDetail;
     private DatabaseHandler databaseCart;
     HelperManager helperManager;
     private String DATABASE_CART = "cart.db";
     Context ctx;
+    ImageView cart_btn;
     private ArrayList<ProductDetail> cartProductList = new ArrayList<>();
 
     @Override
@@ -58,9 +63,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         productNewPrice = (TextView) findViewById(R.id.productnewPrice);
         tvPriceDetail = (TextView) findViewById(R.id.tvPriceDetail);
         productImage = (ImageView) findViewById(R.id.productImage);
+        cart_btn = (ImageView) findViewById(R.id.cart_btn);
         btnAddtoCart = (Button) findViewById(R.id.btnAddtoCart);
         id = getIntent().getStringExtra("Product_ID");
-        Log.e("Product_ID" , id);
+        Log.e("Product_ID", id);
         databaseCart = new DatabaseHandler(ctx, DATABASE_CART);
         cartProductList.clear();
         if (databaseCart.getContactsCount()) {
@@ -72,6 +78,14 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addtoCart();
+
+            }
+        });
+
+        cart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -92,7 +106,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(URL_PRODUCT_DETAIL+id);
+            String jsonStr = sh.makeServiceCall(URL_PRODUCT_DETAIL + id);
             //Log.e(TAG, "Response from url: " + jsonStr);
             if (jsonStr != null) {
                 try {
@@ -121,6 +135,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     productDetail.setDescription(description);
                     productDetail.setPrice(sale_price);
                     productDetail.setName(name);
+                    productDetail.setQuantity(1);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -152,10 +167,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             productOldPrice.setText(regular_price);
             productNewPrice.setText(sale_price);
             Picasso.with(ProductDetailActivity.this).load(image1).placeholder(R.drawable.mobile_icon).error(R.drawable.mobile_icon).into(productImage);
-
         }
     }
-
 
     private void addtoCart() {
         /*********************************************************************************************************/
@@ -170,22 +183,29 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (databaseCart.verification(productDetail.getId())) {
                     Alerts.show(ctx, "Already added to Cart");
                 } else {
-                  //  productDetail.setSelected_size(selected_size);
-                  //  productDetail.setSelected_color(selected_color);
+                    //  productDetail.setSelected_size(selected_size);
+                    //  productDetail.setSelected_color(selected_color);
                     cart_count = cart_count + 1;
-                   cart_number.setText("" + cart_count);
+                    cart_number.setText("" + cart_count);
                     AppPreference.setIntegerPreference(ctx, Constant.CART_ITEM_COUNT, cart_count);
                     Alerts.show(ctx, "Added to Cart");
                     databaseCart.addItemCart(productDetail);
+
+                    Intent intent = new Intent(ProductDetailActivity.this, CartFragment.class);
+                    startActivity(intent);
+
                 }
             } else {
-               // productDetail.setSelected_size(selected_size);
-              //  productDetail.setSelected_color(selected_color);
+                // productDetail.setSelected_size(selected_size);
+                //  productDetail.setSelected_color(selected_color);
                 cart_count = cart_count + 1;
                 cart_number.setText("" + cart_count);
-               AppPreference.setIntegerPreference(ctx, Constant.CART_ITEM_COUNT, cart_count);
+                AppPreference.setIntegerPreference(ctx, Constant.CART_ITEM_COUNT, cart_count);
                 Alerts.show(ctx, "Added to Cart");
                 databaseCart.addItemCart(productDetail);
+
+                Intent intent = new Intent(ProductDetailActivity.this, CartFragment.class);
+                startActivity(intent);
             }
         }
     }

@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.activity;
+package saluja.com.saluja.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import saluja.com.saluja.R;
 import saluja.com.saluja.database.DatabaseHandler;
-import saluja.com.saluja.ui.fragment.fragment.ShoppingFragment;
+import saluja.com.saluja.ui.fragment.ShoppingFragment;
 import saluja.com.saluja.utilit.ConstantData;
 import saluja.com.saluja.utilit.Utility;
 

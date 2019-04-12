@@ -20,4 +20,14 @@ public class Constant {
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USERNAME = "USERNAME";
     public static final String PHONE = "PHONE";
+    public static final String EMAIL_ID = "EMAIL_ID";
+    public static final String PAYMENTR_TYPE = "PAYMENTR_TYPE";
+    public static final String PAYMENTR_NAME = "PAYMENTR_NAME";
+    public static final String PAYMENTR_EMAIL = "PAYMENTR_EMAIL";
+    public static final String PAYMENTR_MOBILE = "PAYMENTR_MOBILE";
+    public static final String PAYMENTR_ADDRESS = "PAYMENTR_ADDRESS";
+    public static final String PAYMENTR_CITY = "PAYMENTR_CITY";
+    public static final String PAYMENTR_STATE = "PAYMENTR_STATE";
+    public static final String PAYMENTR_CONTRY = "PAYMENTR_CONTRY";
+    public static final String PAYMENTR_CODE = "PAYMENTR_CODE";
 }

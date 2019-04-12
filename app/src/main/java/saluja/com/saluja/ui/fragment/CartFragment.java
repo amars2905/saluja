@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.fragment;
+package saluja.com.saluja.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,14 +9,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,15 +27,15 @@ import saluja.com.saluja.constant.Constant;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
-import saluja.com.saluja.ui.fragment.activity.CheckOutActivity;
+import saluja.com.saluja.ui.activity.CheckOutActivity;
+import saluja.com.saluja.ui.activity.LoginActivity;
+import saluja.com.saluja.utilit.BaseActivity;
 import saluja.com.saluja.utilit.GpsTracker;
 import saluja.com.saluja.utilit.SessionManager;
 
-import static saluja.com.saluja.ui.fragment.activity.MainActivity.cart_number;
+import static saluja.com.saluja.ui.activity.MainActivity.cart_number;
 
-
-@SuppressLint("ValidFragment")
-public class CartFragment extends Fragment implements View.OnClickListener {
+public class CartFragment extends BaseActivity implements View.OnClickListener {
 
     Context ctx;
     RecyclerView recyclerView;
@@ -55,22 +52,19 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     private ArrayList<ProductDetail> cartProductList = new ArrayList<>();
     private AdapterCart adapterCart;
 
-    public CartFragment(Context ctx, Activity activity) {
-        this.ctx = ctx;
-        this.activity = activity;
-        helperManager = new HelperManager(ctx);
-        sessionManager = new SessionManager(ctx);
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_addto_cart, container, false);
-        // MainActivity.tooltext_tv.setText(ConstantData.CART);
-        // SharedPreferences prefs = getActivity().getSharedPreferences(mypreference, MODE_PRIVATE);
-        // user_id = prefs.getString("user_id", "0");//"No name defined" is the default value.
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_addto_cart);
 
-        recyclerView = view.findViewById(R.id.rv_wishlist_recyclerview);
-        place_bt = view.findViewById(R.id.bt_wishlist_placeorder);
+        recyclerView = findViewById(R.id.rv_wishlist_recyclerview);
+        place_bt = findViewById(R.id.bt_wishlist_placeorder);
+
+        this.ctx = this;
+        this.activity = this;
+        helperManager = new HelperManager(ctx);
+        sessionManager = new SessionManager(ctx);
 
         list = helperManager.readAllCart();
         place_bt.setVisibility(View.VISIBLE);
@@ -78,7 +72,6 @@ public class CartFragment extends Fragment implements View.OnClickListener {
 
         initDatabase();
         setTotal();
-        return view;
     }
 
     private void initDatabase() {
@@ -88,7 +81,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
             cartProductList.addAll(databaseCart.getAllUrlList());
         }
 
-        adapterCart = new AdapterCart(cartProductList, ctx, CartFragment.this, this, databaseCart);
+        adapterCart = new AdapterCart(cartProductList, ctx,  this, databaseCart);
         LinearLayoutManager layoutManager = new LinearLayoutManager(ctx);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -231,15 +224,16 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     }
 
     private void placeThisOrder() {
-        /* if (user_id.equals("0")) {
-         *//* startActivity(new Intent(ctx, .class));
-            getActivity().finish();*//*
-        } else {*/
+      if (!AppPreference.getBooleanPreference(ctx, Constant.IS_LOGIN)) {
+         startActivity(new Intent(ctx, LoginActivity.class));
+            finish();
+        }
+        else {
         ArrayList<ProductDetail> cartlist = databaseCart.getAllUrlList();
         if (cartlist.size() > 0) {
             startActivity(new Intent(ctx, CheckOutActivity.class));
-            getActivity().finish();
-            // }
+            finish();
+             }
         }
     }
 }

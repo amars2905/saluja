@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.fragment;
+package saluja.com.saluja.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -40,7 +40,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment implements
     Activity activity;
     LinearLayout continue_pay_ll;
 
-    EditText name_et, mobile_et, address_et, country_et, state_et, city_et, zipcode_et;
+    EditText name_et,email_et, mobile_et, address_et, country_et, state_et, city_et, zipcode_et;
     EditText name_et1, mobile_et1, address_et1, country_et1, state_et1, city_et1, zipcode_et1;
 
     String address = "";
@@ -83,6 +83,7 @@ public class ShoppingFragment extends android.support.v4.app.Fragment implements
         zipcode_et = view.findViewById(R.id.et_newaddress_zipcode);
         name_et = view.findViewById(R.id.et_newaddress_name);
         mobile_et = view.findViewById(R.id.et_newaddress_number);
+        email_et = view.findViewById(R.id.et_newaddress_email);
 
         address_et1 = view.findViewById(R.id.et_newaddress_adress1);
         country_et1 = view.findViewById(R.id.et_newaddress_country1);
@@ -153,20 +154,26 @@ public class ShoppingFragment extends android.support.v4.app.Fragment implements
         String state = state_et.getText().toString();
         String city = city_et.getText().toString();
         String zipcode = zipcode_et.getText().toString();
+        String email = email_et.getText().toString();
 
-        String name1 = name_et1.getText().toString();
-        String mobile1 = mobile_et1.getText().toString();
-        String address1 = address_et1.getText().toString();
-        String country1 = country_et1.getText().toString();
-        String state1 = state_et1.getText().toString();
-        String city1 = city_et1.getText().toString();
-        String zipcode1 = zipcode_et1.getText().toString();
 
         if (name.equals("") || mobile.equals("") || address.equals("") || country.equals("") || state.equals("") ||
-                city.equals("") || zipcode.equals("")) {
+                city.equals("") || zipcode.equals("") || email.equals("")) {
 
             Utility.toastView(ctx, "Enter all details");
         } else {
+
+            AppPreference.setStringPreference(ctx, Constant.PHONE, mobile);
+            AppPreference.setStringPreference(ctx, Constant.EMAIL_ID, email);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_NAME, name);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_EMAIL, email);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_ADDRESS, address);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_CITY, city );
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_STATE, state);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_CODE, zipcode);
+            AppPreference.setStringPreference(ctx, Constant.PAYMENTR_CONTRY, country);
+
+
             sessionManager.setData(SessionManager.KEY_ORDER_NAME, name);
             sessionManager.setData(SessionManager.KEY_ORDER_MOBILE, mobile);
             sessionManager.setData(SessionManager.KEY_ORDER_ADDRESS, address);
@@ -176,13 +183,13 @@ public class ShoppingFragment extends android.support.v4.app.Fragment implements
             sessionManager.setData(SessionManager.KEY_ORDER_CITY, city);
 
 
-            sessionManager.setData(SessionManager.KEY_ORDER_NAME1, name1);
+          /*  sessionManager.setData(SessionManager.KEY_ORDER_NAME1, name1);
             sessionManager.setData(SessionManager.KEY_ORDER_MOBILE1, mobile1);
             sessionManager.setData(SessionManager.KEY_ORDER_ADDRESS1, address1);
             sessionManager.setData(SessionManager.KEY_ORDER_STATE1, state1);
             sessionManager.setData(SessionManager.KEY_ORDER_COUNTRY1, country1);
             sessionManager.setData(SessionManager.KEY_ORDER_ZIPCODE1, zipcode1);
-            sessionManager.setData(SessionManager.KEY_ORDER_CITY1, city1);
+            sessionManager.setData(SessionManager.KEY_ORDER_CITY1, city1);*/
 
             PaymentFragment fragment = new PaymentFragment(ctx);
             Utility.setFragment1(fragment, ctx, ConstantData.HOME);

@@ -16,7 +16,7 @@ import java.util.List;
 
 import saluja.com.saluja.ProductModel;
 import saluja.com.saluja.R;
-import saluja.com.saluja.ui.fragment.activity.ProductDetailActivity;
+import saluja.com.saluja.ui.activity.ProductDetailActivity;
 
 
 /**

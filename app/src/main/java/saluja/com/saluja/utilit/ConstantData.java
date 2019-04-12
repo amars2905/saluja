@@ -20,14 +20,14 @@ public class ConstantData {
     public static final String ACTIVITY_ID = "id";
 
 
-    public static final String MEN = "Men";
-    public static final String WOMEN = "Woman";
-    public static final String KIDS = "Kids";
+    public static final String APPLE = "APPLE";
+    public static final String SAMSUNG = "SAMSUNG";
+    public static final String OPPO = "OPPO";
     public static final String MOBILE = "Mobile";
     public static final String HOME = "Home";
     public static final String WISHLIST = "Wishlist";
     public static final String CART = "Wallet";
-    public static final String POLICY = "POLICY";
+    public static final String MI = "Mi";
     public static final String OFFERS = "OFFERS";
     public static final String BILLING = "Billing Details";
     public static final String MY_PROFILE = "My Profile";

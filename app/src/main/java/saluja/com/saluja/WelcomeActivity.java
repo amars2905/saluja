@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import saluja.com.saluja.ui.fragment.activity.MainActivity;
+import saluja.com.saluja.ui.activity.MainActivity;
 
 
 public class WelcomeActivity extends AppCompatActivity {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -48,7 +48,8 @@
                 android:layout_marginRight="8sp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:id="@+id/btnMobile">
+                android:id="@+id/btnMobile"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="40sp"
@@ -140,7 +141,8 @@
                 android:layout_marginRight="8sp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:id="@+id/btnLenovo">
+                android:id="@+id/btnLenovo"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="40sp"
@@ -214,7 +216,7 @@
                 <ImageView
                     android:layout_width="40sp"
                     android:layout_height="40sp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/oppo_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -231,7 +233,8 @@
                 android:layout_marginLeft="8sp"
                 android:layout_marginRight="8sp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="40sp"
@@ -253,7 +256,8 @@
                 android:layout_marginLeft="8sp"
                 android:layout_marginRight="8sp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="35sp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.activity.MainActivity"
+    tools:context=".ui.activity.MainActivity"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -22,32 +22,44 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:id="@+id/rlCart"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="8dp">
-
-                    <TextView
-                        android:id="@+id/cart_number"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="@dimen/dimen_30dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_search"
+                        android:layout_margin="@dimen/dimen_emi_tenure_margin2"
+                        android:id="@+id/btnSearch"/>
+                    <RelativeLayout
+                        android:id="@+id/rlCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/cart_btn"
-                        android:layout_toRightOf="@+id/cart_btn"
-                        android:text="0"
-                        android:layout_marginTop="-4dp"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:paddingRight="8dp">
 
-                    <ImageView
-                        android:id="@+id/cart_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_shopping_cart" />
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/cart_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/cart_btn"
+                            android:layout_toRightOf="@+id/cart_btn"
+                            android:text="0"
+                            android:layout_marginTop="-4dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/cart_btn"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_shopping_cart" />
+                    </RelativeLayout>
+                </LinearLayout>
+
             </RelativeLayout>
             
         </android.support.v7.widget.Toolbar>    

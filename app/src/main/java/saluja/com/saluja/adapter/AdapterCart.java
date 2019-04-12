@@ -1,27 +1,18 @@
 package saluja.com.saluja.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -29,7 +20,7 @@ import saluja.com.saluja.R;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.database.HelperManager;
 import saluja.com.saluja.model.ProductDetail;
-import saluja.com.saluja.ui.fragment.fragment.CartFragment;
+import saluja.com.saluja.ui.fragment.CartFragment;
 
 
 public class AdapterCart extends RecyclerView.Adapter<AdapterCart.MyViewHolder> {
@@ -44,12 +35,11 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.MyViewHolder> 
     private View.OnClickListener onClickListener;
     public DatabaseHandler databaseCart;
 
-    public AdapterCart(ArrayList<ProductDetail> list, Context context, CartFragment fragment, View.OnClickListener onClickListener,
+    public AdapterCart(ArrayList<ProductDetail> list, Context context, View.OnClickListener onClickListener,
                        DatabaseHandler databaseCart) {
         this.list = list;
         this.onClickListener = onClickListener;
         this.context = context;
-        this.fragment = fragment;
         this.databaseCart = databaseCart;
         helperManager = new HelperManager(context);
     }

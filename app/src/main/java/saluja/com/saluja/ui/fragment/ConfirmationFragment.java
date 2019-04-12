@@ -1,4 +1,4 @@
-package saluja.com.saluja.ui.fragment.fragment;
+package saluja.com.saluja.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,18 +16,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import saluja.com.saluja.AppPreference;
 import saluja.com.saluja.R;
 import saluja.com.saluja.adapter.AdapterConfirmation;
+import saluja.com.saluja.constant.Constant;
 import saluja.com.saluja.database.DatabaseHandler;
 import saluja.com.saluja.model.ProductDetail;
+import saluja.com.saluja.payUmoney.PayUmoneyActivity;
+import saluja.com.saluja.ui.activity.ThankYouActivity;
 import saluja.com.saluja.utilit.SessionManager;
 import saluja.com.saluja.utilit.Utility;
+import saluja.com.saluja.utilit.WebApi;
 
 import static android.content.Context.MODE_PRIVATE;
 import static saluja.com.saluja.SplashScreen.mypreference;
@@ -79,22 +89,23 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
     private void initXml(View view) {
         //cart_count = AppPreference.getIntegerPreference(ctx, Constant.TOTAL_AMOUNT); //0 is the default value.
 
-       /* SharedPreferences prefs = getActivity().getSharedPreferences(Constant.TOTAL_AMOUNT, MODE_PRIVATE);
-        totalAmount = prefs.getString("Total", "0");//"No name defined" is the default value.
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.TOTAL_AMOUNT, MODE_PRIVATE);
+       /* totalAmount = prefs.getString("Total", "0");//"No name defined" is the default value.
         Offer_Amount = prefs.getString("Offer", "0");//"No name defined" is the default value.
         Log.e("Total ",".."+totalAmount);*/
 
        /* totalAmount = sessionManager.getData(SessionManager.KEY_ORDER_PRICE);
         Log.e("total ",".."+totalAmount);*/
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(mypreference, MODE_PRIVATE);
-        totalAmount1 = prefs.getString("total_price", "0");//"No name defined" is the default value.
+      /*  SharedPreferences prefs = getActivity().getSharedPreferences(mypreference, MODE_PRIVATE);
+        totalAmount1 = prefs.getString("total_price", "0");//"No name defined" is the default value.*/
 
         ordernow_ll = view.findViewById(R.id.ll_conforder_ordernow);
         recyclerView = view.findViewById(R.id.rv_conforder_recycler);
         total_tv = view.findViewById(R.id.tv_confirmation_total);
         tv_payment = view.findViewById(R.id.tv_payment);
 
+        totalAmount1 = Utility.getCartTotal(databaseCart);
         ordernow_ll.setOnClickListener(this);
         total_tv.setText(totalAmount1);
         tv_payment.setText(totalAmount1);
@@ -106,28 +117,34 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-
             case R.id.ll_conforder_ordernow:
-
-                    /*Intent i = new Intent(getActivity(), PaypalActivity.class);
-                    getActivity().startActivity(i);*/
-
+                String paytype = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_TYPE);
+                if (paytype.equals("PAYUMONEY")) {
+                    Intent i = new Intent(getActivity(), PayUmoneyActivity.class);
+                    getActivity().startActivity(i);
+                    getActivity().finish();
+                }else {
+                    Intent i = new Intent(getActivity(), ThankYouActivity.class);
+                    getActivity().startActivity(i);
+                    getActivity().finish();
+                }
+                //getData();
                 break;
         }
     }
 
-   /* private void getData() {
+    private void getData() {
 
-        String name = sessionManager.getData(SessionManager.KEY_ORDER_NAME);
-        String mobile = sessionManager.getData(SessionManager.KEY_ORDER_MOBILE);
-        String address = sessionManager.getData(SessionManager.KEY_ORDER_ADDRESS);
-        String city = sessionManager.getData(SessionManager.KEY_ORDER_CITY);
-        String state = sessionManager.getData(SessionManager.KEY_ORDER_STATE);
-        String country = sessionManager.getData(SessionManager.KEY_ORDER_COUNTRY);
-        String code = sessionManager.getData(SessionManager.KEY_ORDER_ZIPCODE);
-        String paytype = sessionManager.getData(SessionManager.KEY_PAYMENT_TYPE);
+        String name = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_NAME);
+        String mobile =  AppPreference.getStringPreference(ctx, Constant.PHONE);
+        String address = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_ADDRESS);
+        String city = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_CITY);
+        String state = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_STATE);
+        String country = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_CONTRY);
+        String code = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_CODE);
+        String paytype = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_TYPE);
+
 
         if (name.equals("") || mobile.equals("") || address.equals("") || city.equals("") ) {
             Utility.toastView(ctx, "Please enter Your all shipping Details");
@@ -142,7 +159,7 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
             sessionManager.setData(SessionManager.KEY_ORDER_COUNTRY, "");
             sessionManager.setData(SessionManager.KEY_ORDER_ZIPCODE, "");
             sessionManager.setData(SessionManager.KEY_PAYMENT_TYPE, "");
-            submitData(name, mobile, address, city, state, country, code, paytype, "");
+            submitData("abc", "mobile", "address", "city", "state", "country", "code", "paytype", "");
         }
     }
 
@@ -201,7 +218,7 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
     // post data
     private void submitdata(JSONObject paramObject) {
         Utility.showLoader(ctx);
-        AndroidNetworking.post(WebApi.BASE_URL + WebApi.API_SUBMIT_ORDER)
+        AndroidNetworking.post(WebApi.API_SUBMIT_ORDER)
                 .addJSONObjectBody(paramObject)
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)
@@ -214,9 +231,17 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
                         databaseCart.deleteallCart(databaseCart);
                         clear();
                         //startActivity(new Intent(ctx, ThankyouActivity.class));
-                        Intent i = new Intent(getActivity(), PaypalActivity.class);
-                        getActivity().startActivity(i);
-                        getActivity().finish();
+
+                        String paytype = AppPreference.getStringPreference(ctx, Constant.PAYMENTR_TYPE);
+
+                        if (paytype.equals("PAYUMONEY")) {
+                            Intent i = new Intent(getActivity(), PayUmoneyActivity.class);
+                            getActivity().startActivity(i);
+
+                        }else {
+                            Intent i = new Intent(getActivity(), ThankYouActivity.class);
+                            getActivity().startActivity(i);
+                        }
                     }
 
                     @Override
@@ -225,7 +250,7 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
                         Utility.toastView(ctx, anError.toString());
                     }
                 });
-    }*/
+    }
 
     private void clear() {
         sessionManager.setData(SessionManager.KEY_ORDER_NAME, "");
