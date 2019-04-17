@@ -5,7 +5,7 @@ public class WebApi {
     public static final String BASE_URL = "https://salujacart.com/";
 
     public static final String API_LOGIN = "https://salujacart.com/wp-json/wc/v1/customers/?";
-    public static final String API_REGISTER = BASE_URL + "wp-json/wc/v3/customers/";
+    public static final String API_REGISTER = "https://salujacart.com/wp-json/wc/v1/customers/";
 
     // for woman id - 2179
     // for kids id -

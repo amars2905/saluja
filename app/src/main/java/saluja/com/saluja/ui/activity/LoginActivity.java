@@ -1,11 +1,13 @@
 package saluja.com.saluja.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,12 +31,14 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import saluja.com.saluja.Api.HttpHandler;
 import saluja.com.saluja.AppPreference;
 import saluja.com.saluja.R;
 import saluja.com.saluja.constant.Constant;
@@ -43,6 +47,7 @@ import saluja.com.saluja.utilit.SessionManager;
 import saluja.com.saluja.utilit.Utility;
 import saluja.com.saluja.utilit.WebApi;
 
+import static android.content.ContentValues.TAG;
 import static saluja.com.saluja.SplashScreen.mypreference;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,12 +60,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static CheckBox show_hide_password;
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
-   ProgressBar loginProgress;
+    ProgressBar loginProgress;
     String getEmailId, getPassword;
 
     Context ctx;
     //ConnectionDetector connectionDetector;
     SessionManager sessionManager;
+    ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void initViews()
-    {
+    private void initViews() {
         emailid_et = (EditText) findViewById(R.id.login_emailid);
         password_et = (EditText) findViewById(R.id.login_password);
         loginButton = (Button) findViewById(R.id.loginBtn);
@@ -151,16 +157,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 || getPassword.equals("") || getPassword.length() == 0) {
             loginLayout.startAnimation(shakeAnimation);
 
-            Toast.makeText(this,"Enter both credentials.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter both credentials.", Toast.LENGTH_SHORT).show();
 
         } else if (!m.find()) {
 
-            Toast.makeText(this,"Your Email Id is Invalid.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Your Email Id is Invalid.", Toast.LENGTH_SHORT).show();
 
         } else {
+            new GetContacts().execute();
             //boolean internet = connectionDetector.isConnected();
             //if (internet) {
-                loginUser();
+            //loginUser();
            /* } else {
                 Toast.makeText(this,"No Internet Connection", Toast.LENGTH_SHORT).show();
             }*/
@@ -194,40 +201,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void setResponse(JSONObject response) {
 
         try {
-            String status = response.getString("status");
-            Log.e("response", response.toString() );
-            if (status.equals("ok")) {
+            JSONArray mJsonArray = new JSONArray(response);
+            JSONObject user_obj = mJsonArray.getJSONObject(0);
+            String user_id = user_obj.getString("id");
+            String username = user_obj.getString("username");
+            String user_email = user_obj.getString("email");
+            String diaplay_name = user_obj.getString("displayname");
+            String fname = user_obj.getString("firstname");
+            String lname = user_obj.getString("lastname");
 
-                JSONObject user_obj = response.getJSONObject("user");
-                String user_id = user_obj.getString("id");
-                String username = user_obj.getString("username");
-                String user_email = user_obj.getString("email");
-                String diaplay_name = user_obj.getString("displayname");
-                String fname = user_obj.getString("firstname");
-                String lname = user_obj.getString("lastname");
+            AppPreference.setStringPreference(ctx, Constant.USERNAME, fname + " " + lname);
+            AppPreference.setBooleanPreference(ctx, Constant.IS_LOGIN, true);
+            AppPreference.setStringPreference(ctx, Constant.USER_ID, user_id);
 
-                AppPreference.setStringPreference(ctx, Constant.USERNAME, fname + " " + lname);
-                AppPreference.setBooleanPreference(ctx, Constant.IS_LOGIN, true);
+            SharedPreferences.Editor editor = getSharedPreferences(mypreference, MODE_PRIVATE).edit();
+            editor.putString("user_id", user_id);
+            editor.apply();
 
-                SharedPreferences.Editor editor = getSharedPreferences(mypreference, MODE_PRIVATE).edit();
-                editor.putString("user_id", user_id);
-                editor.apply();
+            sessionManager.createLoginSession(user_id, username, diaplay_name, user_email);
+            startActivity(new Intent(ctx, MainActivity.class));
+            finish();
 
-                sessionManager.createLoginSession(user_id, username, diaplay_name, user_email);
-                startActivity(new Intent(ctx, MainActivity.class));
-                finish();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
 
-            } else if (status.equals("error")) {
-                String error = response.getString("error");
-                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(LoginActivity.this, "ok", Toast.LENGTH_SHORT).show();
-
-            }
-            clear();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
@@ -248,9 +245,83 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.createAccount:
-
+                Intent intent  = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
                 break;
         }
 
     }
+
+
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetContacts extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(LoginActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(WebApi.API_LOGIN+"email="+getEmailId+"&password="+getPassword);
+            Log.e(TAG, "Response from url: " + jsonStr);
+            if (jsonStr != null) {
+                Log.e(TAG, "Json not empity " );
+                try {
+                    //converting response to json object
+                    JSONArray mJsonArray = new JSONArray(jsonStr);
+                    JSONObject user_obj = mJsonArray.getJSONObject(0);
+                    String user_id = user_obj.getString("id");
+                    String username = user_obj.getString("username");
+                    String user_email = user_obj.getString("email");
+                    String diaplay_name = user_obj.getString("displayname");
+                    String fname = user_obj.getString("firstname");
+                    String lname = user_obj.getString("lastname");
+
+                    AppPreference.setStringPreference(ctx, Constant.USERNAME, fname + " " + lname);
+                    AppPreference.setBooleanPreference(ctx, Constant.IS_LOGIN, true);
+                    AppPreference.setStringPreference(ctx, Constant.USER_ID, user_id);
+
+                    SharedPreferences.Editor editor = getSharedPreferences(mypreference, MODE_PRIVATE).edit();
+                    editor.putString("user_id", user_id);
+                    editor.apply();
+
+                    sessionManager.createLoginSession(user_id, username, diaplay_name, user_email);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(LoginActivity.this, "Couldn't get json from server. Check LogCat for possible errors!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            startActivity(new Intent(ctx, CheckOutActivity.class));
+            finish();
+        }
+    }
+
 }

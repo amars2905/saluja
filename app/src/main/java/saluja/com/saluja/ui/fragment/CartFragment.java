@@ -225,7 +225,7 @@ public class CartFragment extends BaseActivity implements View.OnClickListener {
 
     private void placeThisOrder() {
       if (!AppPreference.getBooleanPreference(ctx, Constant.IS_LOGIN)) {
-         startActivity(new Intent(ctx, LoginActivity.class));
+         startActivity(new Intent(ctx, CheckOutActivity.class));
             finish();
         }
         else {

@@ -19,6 +19,7 @@ public class Constant {
     public static final String TOTAL_AMOUNT = "TOTAL_AMOUNT";
     public static final String IS_LOGIN = "IS_LOGIN";
     public static final String USERNAME = "USERNAME";
+    public static final String USER_ID = "USER_ID";
     public static final String PHONE = "PHONE";
     public static final String EMAIL_ID = "EMAIL_ID";
     public static final String PAYMENTR_TYPE = "PAYMENTR_TYPE";
