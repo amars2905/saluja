@@ -1,6 +1,7 @@
 package saluja.com.saluja.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,15 +29,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import saluja.com.saluja.Api.RequestHandler;
 import saluja.com.saluja.Api.URLs;
 import saluja.com.saluja.AppPreference;
 import saluja.com.saluja.R;
 import saluja.com.saluja.constant.Constant;
+import saluja.com.saluja.retrofit_provider.RetrofitApiClient;
+import saluja.com.saluja.retrofit_provider.RetrofitService;
+import saluja.com.saluja.retrofit_provider.WebResponse;
+import saluja.com.saluja.utilit.Alerts;
+import saluja.com.saluja.utilit.ConnectionDetector;
 import saluja.com.saluja.utilit.ConstantData;
 import saluja.com.saluja.utilit.Utility;
 import saluja.com.saluja.utilit.WebApi;
@@ -49,6 +58,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     Button btn_signUp;
     EditText et_fname, etlname, etemail, etpassword;
     Context ctx;
+    private ConnectionDetector connectionDetector;
+    private RetrofitApiClient retrofitApiClient;
 
     String getUserName, getdisplayName, getEmailId, getPassword, getMobileNumber, getConfirmPassword;
 
@@ -56,6 +67,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        ctx = this;
+        connectionDetector = new ConnectionDetector(ctx);
+        retrofitApiClient = RetrofitService.getRetrofit();
         initViews();
         setListeners();
 
@@ -137,9 +152,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             // Else do signup or do your stuff
         else {
-              //  regsiterUser();
-            RegisterUser ru = new RegisterUser();
-            ru.execute();
+             if (connectionDetector.isNetworkAvailable()){
+                 doRegestration();
+             }
         }
     }
 
@@ -217,6 +232,41 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    private void doRegestration() {
+        RetrofitService.getServerResponse(new Dialog(ctx), retrofitApiClient.signUp(getEmailId, getPassword, getUserName, getdisplayName), new WebResponse() {
+            @Override
+            public void onResponseSuccess(Response<?> result) {
+                Alerts.show(ctx, "Login Success!");
+                ResponseBody response = (ResponseBody) result.body();
+                try {
+                    JSONObject loginObject = new JSONObject(response.string());
+
+                    AppPreference.setBooleanPreference(ctx, Constant.IS_LOGIN, true);
+                    AppPreference.setStringPreference(ctx, Constant.USER_ID, loginObject.getString("id"));
+                    AppPreference.setStringPreference(ctx, Constant.EMAIL_ID, loginObject.getString("email"));
+                    AppPreference.setStringPreference(ctx, Constant.FIRST_NAME, loginObject.getString("first_name"));
+                    AppPreference.setStringPreference(ctx, Constant.LAST_NAME, loginObject.getString("last_name"));
+                    AppPreference.setStringPreference(ctx, Constant.USERNAME, loginObject.getString("username"));
+
+                    startActivity(new Intent(ctx, MainActivity.class));
+                    finish();
+                    //Toast.makeText(ctx, loginObject.toString(), Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String error) {
+                Toast.makeText(ctx, error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

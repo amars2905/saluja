@@ -99,7 +99,9 @@ public class ShoppingFragment extends android.support.v4.app.Fragment implements
     private void setData() {
         dialog = new Dialog(ctx);
         String name = AppPreference.getStringPreference(ctx, Constant.USERNAME);
+        String email = AppPreference.getStringPreference(ctx, Constant.EMAIL_ID);
         name_et.setText(name);
+        email_et.setText(email);
 
         getLatLong();
     }

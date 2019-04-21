@@ -1,6 +1,7 @@
 package saluja.com.saluja.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,13 +36,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import saluja.com.saluja.Api.HttpHandler;
 import saluja.com.saluja.AppPreference;
 import saluja.com.saluja.R;
 import saluja.com.saluja.constant.Constant;
+import saluja.com.saluja.retrofit_provider.RetrofitApiClient;
+import saluja.com.saluja.retrofit_provider.RetrofitService;
+import saluja.com.saluja.retrofit_provider.WebResponse;
+import saluja.com.saluja.utilit.Alerts;
+import saluja.com.saluja.utilit.ConnectionDetector;
 import saluja.com.saluja.utilit.ConstantData;
 import saluja.com.saluja.utilit.SessionManager;
 import saluja.com.saluja.utilit.Utility;
@@ -62,9 +71,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static Animation shakeAnimation;
     ProgressBar loginProgress;
     String getEmailId, getPassword;
+    private RetrofitApiClient retrofitApiClient;
 
     Context ctx;
-    //ConnectionDetector connectionDetector;
+    private ConnectionDetector connectionDetector;
     SessionManager sessionManager;
     ProgressDialog pDialog;
 
@@ -74,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         ctx = this;
+        connectionDetector = new ConnectionDetector(ctx);
+        retrofitApiClient = RetrofitService.getRetrofit();;
         initViews();
         setListeners();
 
@@ -164,14 +176,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Your Email Id is Invalid.", Toast.LENGTH_SHORT).show();
 
         } else {
-            new GetContacts().execute();
-            //boolean internet = connectionDetector.isConnected();
-            //if (internet) {
-            //loginUser();
-           /* } else {
-                Toast.makeText(this,"No Internet Connection", Toast.LENGTH_SHORT).show();
-            }*/
+
+            if (connectionDetector.isNetworkAvailable()){
+                doLogin();
+            }
+
         }
+    }
+
+    private void doLogin() {
+        RetrofitService.getServerResponse(new Dialog(ctx), retrofitApiClient.signIn(getEmailId, getPassword), new WebResponse() {
+            @Override
+            public void onResponseSuccess(Response<?> result) {
+                Alerts.show(ctx, "Login Success!");
+                ResponseBody response = (ResponseBody) result.body();
+                try {
+                    JSONArray jsonArray = new JSONArray(response.string());
+                    JSONObject loginObject = new JSONObject();
+                    loginObject = jsonArray.getJSONObject(0);
+
+                    AppPreference.setBooleanPreference(ctx, Constant.IS_LOGIN, true);
+                    AppPreference.setStringPreference(ctx, Constant.USER_ID, loginObject.getString("id"));
+                    AppPreference.setStringPreference(ctx, Constant.EMAIL_ID, loginObject.getString("email"));
+                    AppPreference.setStringPreference(ctx, Constant.FIRST_NAME, loginObject.getString("first_name"));
+                    AppPreference.setStringPreference(ctx, Constant.LAST_NAME, loginObject.getString("last_name"));
+                    AppPreference.setStringPreference(ctx, Constant.USERNAME, loginObject.getString("username"));
+
+                    startActivity(new Intent(ctx, MainActivity.class));
+                    finish();
+                    //Toast.makeText(ctx, loginObject.toString(), Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onResponseFailed(String error) {
+
+            }
+        });
     }
 
     private void loginUser() {

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -126,7 +127,12 @@ public class CartFragment extends BaseActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_wishlist_placeorder:
-                locationPermission();
+                if (AppPreference.getBooleanPreference(ctx, Constant.IS_LOGIN)) {
+                    locationPermission();
+                } else {
+                    Toast.makeText(ctx, "First you have to Login for Checkout!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ctx, LoginActivity.class));
+                }
                 break;
             case R.id.iv_adpcart_minus:
                 minusItem(view);

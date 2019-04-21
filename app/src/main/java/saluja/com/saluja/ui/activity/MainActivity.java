@@ -1,6 +1,7 @@
 package saluja.com.saluja.ui.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -110,6 +112,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        MenuItem itemLogin = menu.findItem(R.id.action_settings);
+        MenuItem itemLogout = menu.findItem(R.id.action_logout);
+
+        if (AppPreference.getBooleanPreference(context, Constant.IS_LOGIN)){
+            itemLogin.setVisible(false);
+            itemLogout.setVisible(true);
+        }else{
+            itemLogin.setVisible(true);
+            itemLogout.setVisible(false);
+        }
+
         return true;
     }
 
@@ -121,7 +135,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             return true;
+        }else if (id == R.id.action_logout){
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -217,5 +234,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
         cart_count = AppPreference.getIntegerPreference(context, Constant.CART_ITEM_COUNT); //0 is the default value.
         cart_number.setText("" + cart_count);
+    }
+
+    private void doLogout(){
+        new AlertDialog.Builder(context)
+                .setTitle("Logout")
+                .setMessage("Are you sure want to logout ?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppPreference.setBooleanPreference(context, Constant.IS_LOGIN, false);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);*/
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("NO", null)
+                .create()
+                .show();
     }
 }
