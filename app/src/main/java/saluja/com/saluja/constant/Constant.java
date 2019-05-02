@@ -10,6 +10,7 @@ public class Constant {
 
     public static final String IMAGE_URL = "https://stygianstore.com/stygian/banner/";
     public static final String LOGIN_URL = "customers";
+    public static final String ORDER_URL = "orders";
 
     /* Preference */
     public static final String HOME = "HOME";
