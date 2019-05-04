@@ -141,6 +141,8 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
                     Intent i = new Intent(getActivity(), PayUmoneyActivity.class);
                     getActivity().startActivity(i);
                     getActivity().finish();
+                    getData();
+
                 }else {
 
                     getData();
@@ -372,6 +374,10 @@ public class ConfirmationFragment extends android.support.v4.app.Fragment implem
                         JSONObject loginObject = new JSONObject(response.string());
 
                         Toast.makeText(ctx, loginObject.toString(), Toast.LENGTH_SHORT).show();
+
+                        Utility.toastView(ctx, "your order has been successfully done");
+                        databaseCart.deleteallCart(databaseCart);
+                        clear();
 
                         Intent i = new Intent(getActivity(), ThankYouActivity.class);
                         getActivity().startActivity(i);
