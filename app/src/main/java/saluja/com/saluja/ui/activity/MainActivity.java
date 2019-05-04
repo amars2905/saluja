@@ -150,11 +150,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
             //webView.loadUrl("http://salujacart.com/index.php/product-category/clothing/accessories/");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(this, CartFragment.class);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
             //webView.loadUrl("http://salujacart.com/index.php/product-category/mobile/");
+            Intent intent = new Intent(this, PolicyActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
             try {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -167,8 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } catch(Exception e) {
                 Toast.makeText(MainActivity.this," "+e.toString(),Toast.LENGTH_SHORT).show();
             }
-        } else if (id == R.id.nav_send) {
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

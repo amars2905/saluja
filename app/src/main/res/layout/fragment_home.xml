@@ -40,18 +40,11 @@
                     app:snap="false" />
             </RelativeLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="180sp"
-                android:scaleType="fitXY"
-                android:src="@drawable/special_offer"
-                android:layout_marginTop="4sp"
-                android:layout_marginBottom="4sp"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150sp"
                 android:layout_margin="5sp"
                 android:orientation="horizontal">
 
@@ -71,7 +64,7 @@
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="100dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/accessory" />
 
@@ -101,7 +94,7 @@
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="100dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/back_cover" />
 

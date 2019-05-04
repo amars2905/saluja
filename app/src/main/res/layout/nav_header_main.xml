@@ -17,7 +17,7 @@
         android:layout_width="80sp"
         android:layout_height="50sp"
         android:contentDescription="@string/nav_header_desc"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/sujatacartpng" />
 
     <TextView
         android:layout_width="match_parent"
