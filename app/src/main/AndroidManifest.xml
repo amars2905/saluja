@@ -17,10 +17,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.activity.PolicyActivity"></activity>
-        <activity
-            android:name=".ui.activity.ThankYouActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activity.ThankYouActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ui.activity.SignUpActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity
@@ -48,6 +46,7 @@
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".payUmoney.PayUmoneyActivity">
 
             <!--
@@ -58,7 +57,7 @@
             </intent-filter>
             -->
         </activity>
-        <activity android:name=".ui.fragment.CartFragment" />
+        <activity android:name=".ui.fragment.CartFragment"/>
     </application>
 
 </manifest>

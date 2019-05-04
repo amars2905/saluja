@@ -70,8 +70,9 @@ public class PaymentFragment extends android.support.v4.app.Fragment implements 
     }
 
     private void initXml(View view) {
-        AppPreference.setStringPreference(ctx, Constant.PAYMENTR_TYPE , "COD");
         c = Calendar.getInstance();
+
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         currentDateTimeString = df.format(c.getTime());
         next_ll = view.findViewById(R.id.ll_payment_next);
@@ -94,14 +95,22 @@ public class PaymentFragment extends android.support.v4.app.Fragment implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_payment_next:
+              /*  sessionManager.setData(SessionManager.KEY_PAYMENT_TYPE, "PayPal");
+                SharedPreferences.Editor editor1 = getActivity().getSharedPreferences(mypreference, MODE_PRIVATE).edit();
+                editor1.putString("total_price", total_tv.getText().toString());
+                editor1.putString("offer_price", tv_payment_offer.getText().toString());
+                editor1.apply();*/
+                // ((CheckOutActivity) getActivity()).setPosition(2);
                 ConfirmationFragment fragment = new ConfirmationFragment(ctx);
                 Utility.setFragment1(fragment, ctx, ConstantData.HOME);
-                break;
 
+                break;
             case R.id.rb_payment_cod:
                 sessionManager.setData(SessionManager.KEY_PAYMENT_TYPE, "PAYUMONEY");
+                //((CheckOutActivity) getActivity()).setPosition(2);
                 Alerts.show(ctx, "Payumoney");
                 AppPreference.setStringPreference(ctx, Constant.PAYMENTR_TYPE , "PAYUMONEY");
+
                 break;
             case R.id.rb_payment_credit:
                 sessionManager.setData(SessionManager.KEY_PAYMENT_TYPE, "COD");
